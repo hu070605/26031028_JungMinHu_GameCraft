@@ -28,6 +28,11 @@ class G2InputContext : IDisposable
 	private readonly byte[] _keyOld = new byte[MaxInputKey];
 	private readonly InputState[] _keyMap = new InputState[MaxInputKey];
 
+	// 짧게 눌렀다 놓은 입력도 다음 게임 프레임에서 한 번 처리합니다.
+	private readonly bool[] _pendingKeyDown = new bool[MaxInputKey];
+	private readonly bool[] _frameKeyDown = new bool[MaxInputKey];
+	private readonly bool[] _eventKeyHeld = new bool[MaxInputKey];
+
 	private readonly byte[] _buttonCur = new byte[MaxInputButton];
 	private readonly byte[] _buttonOld = new byte[MaxInputButton];
 	private readonly InputState[] _buttonMap = new InputState[MaxInputButton];
@@ -63,6 +68,9 @@ class G2InputContext : IDisposable
 		}
 		_targetForm = form ?? throw new ArgumentNullException(nameof(form));
 		_targetForm.MouseWheel += OnMouseWheel;
+		_targetForm.KeyDown += OnKeyDown;
+		_targetForm.KeyUp += OnKeyUp;
+		_targetForm.Deactivate += OnDeactivate;
 		_mouseOldPosition = _mousePosition;
 		Instance = this;
 	}
@@ -78,6 +86,8 @@ class G2InputContext : IDisposable
 
 	private void UpdateKeyboard()
 	{
+		Array.Copy(_pendingKeyDown, _frameKeyDown, MaxInputKey);
+		Array.Clear(_pendingKeyDown);
 		Array.Copy(_keyCur, _keyOld, MaxInputKey);
 		if(GetKeyboardState(_keyCur))
 		{
@@ -144,6 +154,26 @@ class G2InputContext : IDisposable
 		return InputState.None;
 	}
 
+	private void OnKeyDown(object? sender, KeyEventArgs e)
+	{
+		int index = GetKeyIndex(e.KeyCode);
+		if (!_eventKeyHeld[index])
+		{
+			_pendingKeyDown[index] = true;
+			_eventKeyHeld[index] = true;
+		}
+	}
+
+	private void OnKeyUp(object? sender, KeyEventArgs e)
+	{
+		_eventKeyHeld[GetKeyIndex(e.KeyCode)] = false;
+	}
+
+	private void OnDeactivate(object? sender, EventArgs e)
+	{
+		Reset();
+	}
+
 	private void OnMouseWheel(object? sender, MouseEventArgs e)
 	{
 		_wheelAccumulated += e.Delta;
@@ -151,7 +181,7 @@ class G2InputContext : IDisposable
 
 	public bool IsKeyDown(Keys key)
 	{
-		return _keyMap[GetKeyIndex(key)] == InputState.Down;
+		return _frameKeyDown[GetKeyIndex(key)];
 	}
 
 	public bool IsKeyUp(Keys key)
@@ -191,6 +221,9 @@ class G2InputContext : IDisposable
 
 	public void Reset()
 	{
+		Array.Clear(_pendingKeyDown);
+		Array.Clear(_frameKeyDown);
+		Array.Clear(_eventKeyHeld);
 		Array.Clear(_keyCur, 0, MaxInputKey);
 		Array.Clear(_keyOld, 0, MaxInputKey);
 		Array.Clear(_keyMap, 0, MaxInputKey);
@@ -225,6 +258,9 @@ class G2InputContext : IDisposable
 	public void Dispose()
 	{
 		_targetForm.MouseWheel -= OnMouseWheel;
+		_targetForm.KeyDown -= OnKeyDown;
+		_targetForm.KeyUp -= OnKeyUp;
+		_targetForm.Deactivate -= OnDeactivate;
 		Instance = null;
 	}
 }

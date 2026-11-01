@@ -2,10 +2,10 @@ Add-Type -AssemblyName System.Drawing
 
 $backgroundSource = 'C:\Users\azxc9\.codex\generated_images\01a16351-e3da-7690-bd43-5f402acefb8f\exec-7ee46198-ffcf-4fc3-8a17-81e586e252ca.png'
 $platformSource = 'C:\Users\azxc9\.codex\generated_images\01a16351-e3da-7690-bd43-5f402acefb8f\exec-e349cf44-d98e-4811-b484-93a892899fee.png'
-$outputDirectory = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\background\arena'
-$backgroundOutput = Join-Path $outputDirectory 'Arena_Background_1280x720.png'
-$platformOutput = Join-Path $outputDirectory 'Arena_Platform_1280x720.png'
-$previewOutput = Join-Path $outputDirectory 'Arena_Composite_Preview_1280x720.png'
+$outputDirectory = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\background'
+$backgroundOutput = Join-Path $outputDirectory 'PunchStep_Background.png'
+$platformOutput = Join-Path $outputDirectory 'PunchStep_Platform.png'
+$previewOutput = Join-Path $outputDirectory 'PunchStep_Composite_Preview_1280x720.png'
 
 function Resize-Png {
     param(

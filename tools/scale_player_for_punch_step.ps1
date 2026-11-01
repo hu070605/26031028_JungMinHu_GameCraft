@@ -1,10 +1,10 @@
 Add-Type -AssemblyName System.Drawing
 
 $sourceDirectory = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\animation\animation_player'
-$outputDirectory = Join-Path $sourceDirectory 'arena_1280x720_scale'
-$backgroundPath = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\background\arena\Arena_Background_1280x720.png'
-$platformPath = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\background\arena\Arena_Platform_1280x720.png'
-$previewPath = Join-Path $outputDirectory 'Arena_CharacterScale_Preview_1280x720.png'
+$outputDirectory = Join-Path $sourceDirectory 'punch_step_1280x720_scale'
+$backgroundPath = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\background\PunchStep_Background.png'
+$platformPath = 'C:\Users\azxc9\OneDrive\Desktop\26031028_JungMinHu_GameCraft\resource\background\PunchStep_Platform.png'
+$previewPath = Join-Path $outputDirectory 'PunchStep_CharacterScale_Preview_1280x720.png'
 
 $frameCount = 8
 $targetFrameWidth = 160

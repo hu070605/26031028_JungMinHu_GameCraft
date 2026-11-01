@@ -23,7 +23,9 @@ class G2D2DContext : IDisposable
 		Factory = D2D1.D2D1CreateFactory<ID2D1Factory1>();
 		DWriteFactory = DWrite.DWriteCreateFactory<IDWriteFactory>();
 		RenderTarget = Factory.CreateHwndRenderTarget(
-			  new RenderTargetProperties()
+			  // 좌표와 픽셀을 1:1로 맞춥니다. 창 크기 배율은 G2AppBase에서 적용하므로,
+			  // Windows 고해상도 배율이 여기서 중복 적용되지 않도록 합니다.
+			  new RenderTargetProperties { DpiX = 96.0f, DpiY = 96.0f }
 			, new HwndRenderTargetProperties
 			{
 				Hwnd = hwnd,
