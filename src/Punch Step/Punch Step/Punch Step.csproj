@@ -32,6 +32,29 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\..\resource\animation\animation_player\Player_Punch_Right.png">
+      <Link>resource\animation\animation_player\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- 몬스터 기본 이미지·터지는 시트와 포탈 시트를 실행 폴더에 복사합니다. -->
+  <ItemGroup>
+    <Content Include="..\..\..\resource\animation\animation_monster\*.png">
+      <Link>resource\animation\animation_monster\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- 타이틀 배경과 투명 버튼 이미지도 실행/배포 폴더로 복사합니다. -->
+  <ItemGroup>
+    <Content Include="..\..\..\resource\title\PunchStep_Title_*.png">
+      <Link>resource\title\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <!-- 플레이 장면에서 사용하는 BGM도 실행 파일과 함께 복사합니다. -->
